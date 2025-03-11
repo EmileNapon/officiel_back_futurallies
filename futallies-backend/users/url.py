@@ -16,7 +16,7 @@ urlpatterns = [
     # Gestion des utilisateurs
     path('fidalli/users/', list_users, name='list_users'),  # Liste des utilisateurs
     path('fidalli/users/me/', UserDetailView.as_view(), name='user-detail'),  # Infos utilisateur connecté
-    path('fidalli/users/me/update/', UpdateUserView.as_view(), name='update-user'),  # Mise à jour de l'utilisateur connecté
+    path('fidalli/users/update/', UpdateUserView.as_view(), name='update-user'),  # Mise à jour de l'utilisateur connecté
     path('fidalli/users/me/delete/', DeleteUserView.as_view(), name='delete-user'),  # Suppression du compte utilisateur
 ]
 

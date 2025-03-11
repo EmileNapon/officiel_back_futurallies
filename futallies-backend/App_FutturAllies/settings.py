@@ -208,13 +208,12 @@ REST_FRAMEWORK = {
 
 
 
-
 import os
 
 
 BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
 
 # Configuration des fichiers médias
-MEDIA_URL = 'media/'
-MEDIA_ROOT = os.path.join(BASE_DIR, 'media/')
+MEDIA_URL = '/fidalli/media/'
+MEDIA_ROOT = os.path.join(BASE_DIR, 'media')
 
