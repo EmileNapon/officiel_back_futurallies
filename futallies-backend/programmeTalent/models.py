@@ -52,8 +52,12 @@ class Seance(models.Model):
     statut = models.CharField(max_length=10, choices=[('confirmé', 'confirmé'),('annulé', 'annulé'),('attente', 'attente')], default='attente')
     module = models.ForeignKey(Module, on_delete=models.CASCADE, default=1)  # Relation vers Module
     formation= models.ForeignKey(Formation, on_delete=models.CASCADE, default=1)  # Relation vers Module
-    user=models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
+    user = models.ManyToManyField(CustomUser)
 
+
+# class Seance_user(models.Model):
+#     seance=models.ForeignKey(Seance, on_delete=models.CASCADE, default=1)
+#     customuser = models.ForeignKey(CustomUser, on_delete=models.CASCADE, default=1)
     
 class AffectationStage(models.Model):
     inscrit = models.ForeignKey(Inscrit, on_delete=models.CASCADE)  # Relation vers Inscrit

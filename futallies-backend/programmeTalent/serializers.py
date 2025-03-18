@@ -1,7 +1,7 @@
 
 from rest_framework import serializers
 
-from .models import Formation,  Inscrit, ModuleFormation, Group, AffectationStage, Seance
+from .models import Formation,  Inscrit, ModuleFormation, Group, AffectationStage, Seance,CustomUser
 
 class FormationSerializer(serializers.ModelSerializer):
     class Meta:
@@ -22,6 +22,7 @@ class ModuleFormationSerializer(serializers.ModelSerializer):
         return ModuleFormation.objects.create(**validated_data)
 
 class SeanceSerializer(serializers.ModelSerializer):
+    user = serializers.PrimaryKeyRelatedField(queryset=CustomUser.objects.all(), many=True)
     class Meta:
         model = Seance
         fields =  '__all__'   # Including all necessary fields

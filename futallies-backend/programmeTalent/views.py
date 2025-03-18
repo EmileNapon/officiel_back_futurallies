@@ -4,7 +4,7 @@ from rest_framework.response import Response
 from rest_framework import status
 from rest_framework.decorators import api_view
 
-from programmeTalent.models import Formation, Inscrit, ModuleFormation, Seance,Annonce
+from .models import Formation, Inscrit, ModuleFormation, Seance,Annonce, CustomUser,Module
 
 
 from .serializers import AffectationStageSerializer, FormationSerializer, GroupSerializer, InscritSerializer, ModuleFormationSerializer, SeanceSerializer,AnnonceSerializer
@@ -170,6 +170,49 @@ def create_Seance(request):
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
     
+# @api_view(['POST'])
+# def create_Seance(request):
+#     if request.method == 'POST':
+#         # Récupérer les données envoyées dans la requête
+#         user_ids = request.data.get('user_ids', [])
+#         formation_id = request.data.get('formation_id')
+#         module_id = request.data.get('module_id')
+#         lieu = request.data.get('lieu')
+#         date_formation = request.data.get('date_formation')
+#         heure_debut = request.data.get('heure_debut')
+#         heure_fin = request.data.get('heure_fin')
+
+#         if not user_ids:
+#             return Response({"error": "No users selected"}, status=status.HTTP_400_BAD_REQUEST)
+
+#         # Créer une séance pour chaque utilisateur
+#         created_seances = []
+#         for user_id in user_ids:
+#             user = CustomUser.objects.get(id=user_id)  # Récupérer l'utilisateur
+#             module = Module.objects.get(id=module_id)  # Récupérer le module
+#             formation = Formation.objects.get(id=formation_id)  # Récupérer la formation
+
+#             # Créer une nouvelle séance pour chaque utilisateur
+#             seance = Seance(
+#                 lieu=lieu,
+#                 date_formation=date_formation,
+#                 heure_debut=heure_debut,
+#                 heure_fin=heure_fin,
+#                 statut='attente',  # Statut par défaut
+#                 module=module,
+#                 formation=formation,
+#                 user=user
+#             )
+#             seance.save()  # Sauvegarder la séance
+#             created_seances.append(seance)  # Ajouter la séance créée à la liste
+
+#         # Sérialiser les séances créées pour la réponse
+#         serializer = SeanceSerializer(created_seances, many=True)
+#         return Response(serializer.data, status=status.HTTP_201_CREATED)
+
+
+
+
 
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])  # Permet seulement aux utilisateurs authentifiés de lister les offres
@@ -204,8 +247,6 @@ def detail_Seance(request, seance_id):
 @api_view(['PUT'])
 @permission_classes([IsAuthenticated])
 def update_Seance(request, pk):
-
-
     try:
         seance = Seance.objects.get(pk=pk)
     except Seance.DoesNotExist:
