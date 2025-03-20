@@ -24,7 +24,7 @@ class RegisterView(generics.CreateAPIView):
 # Vue pour récupérer les informations de l'utilisateur authentifié
 class UserDetailView(generics.RetrieveAPIView):
     serializer_class = UserSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
 
     def get_object(self):
         return self.request.user  # Récupère l'utilisateur connecté au lieu d'un autre utilisateur
@@ -33,7 +33,7 @@ class UserDetailView(generics.RetrieveAPIView):
 
 class UpdateUserView(generics.UpdateAPIView):
     serializer_class = UpdateUserSerializer
-    permission_classes = [IsAuthenticated]
+    # permission_classes = [IsAuthenticated]
     parser_classes = [JSONParser, MultiPartParser, FormParser]  # ✅ Ajout de JSONParser
     def get_object(self):
         user_id = self.kwargs.get("pk")
@@ -43,8 +43,7 @@ class UpdateUserView(generics.UpdateAPIView):
 
 # Vue pour la suppression d'un utilisateur
 class DeleteUserView(generics.DestroyAPIView):
-    permission_classes = [IsAuthenticated]
-
+    # permission_classes = [IsAuthenticated]
     def get_object(self):
         return self.request.user  # Un utilisateur peut supprimer son propre compte
 
@@ -54,7 +53,7 @@ class CustomTokenObtainPairView(TokenObtainPairView):
 
 # Vue pour lister tous les utilisateurs (nécessite une authentification)
 @api_view(['GET'])
-@permission_classes([IsAuthenticated])  # Seulement les utilisateurs authentifiés peuvent voir cette liste
+# @permission_classes([IsAuthenticated])  # Seulement les utilisateurs authentifiés peuvent voir cette liste
 def list_users(request):
     users = CustomUser.objects.all().order_by('-id')  # Trie les utilisateurs par ID décroissant
     serializer = UserSerializer(users, many=True)

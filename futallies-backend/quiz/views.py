@@ -1,4 +1,5 @@
 import logging
+from django.conf import settings
 from django.shortcuts import render
 
 # Create your views here.
@@ -80,7 +81,7 @@ def GenerateQuizQuestions(request):
         return Response({"error": "La description est obligatoire."}, status=status.HTTP_400_BAD_REQUEST)
 
     # Appel au modèle génératif
-    genai.configure(api_key="AIzaSyA7EQT7jHIEcFrWssniaA5n1XoTxuA1mPM")
+    genai.configure(api_key=settings.GEMINI_API_KEY)
     model = genai.GenerativeModel("gemini-1.5-flash")
     response = model.generate_content(description)
     generated_text = response.text

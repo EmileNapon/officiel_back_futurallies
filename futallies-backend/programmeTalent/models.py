@@ -39,6 +39,10 @@ class Inscrit(models.Model):
 class ModuleFormation(models.Model):
     module = models.ForeignKey(Module, on_delete=models.CASCADE)  # Relation vers Module
     formation = models.ForeignKey(Formation, on_delete=models.CASCADE)  # Relation vers Formation
+    class Meta:
+        unique_together = ('module', 'formation')  # Assure qu'un utilisateur ne peut s'inscrire qu'une seule fois à une formation
+    def __str__(self):
+        return f"{self.module} inscrit à {self.formation}"
 
 
 
